@@ -137,7 +137,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   
-  # Thijmen - output plot for season difference
+  
   output$plot_season <- renderPlot({
     ggplot() +
       geom_col(data = 
@@ -169,7 +169,7 @@ server <- function(input, output, session) {
   
 })
   
-  # Thijmen - output plot with demographics - focus on deprivation
+ 
   output$plot_season_demo_simd <- renderPlot({
     
     demo_attendances_season %>% 
@@ -191,7 +191,7 @@ server <- function(input, output, session) {
   
 })
   
-  # Thijmen - output plot with demographics - focus on age
+  
   output$plot_season_demo_age <- renderPlot({
     
     demo_attendances_season %>% 
@@ -210,7 +210,7 @@ server <- function(input, output, session) {
     
   })
   
-  # Thijmen - output map leaflet plot
+ 
   output$attendance_season_heatmap <- renderLeaflet({
     waiting_times %>% 
       rename("Location" = "treatment_location") %>% 
