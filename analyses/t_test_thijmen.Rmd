@@ -87,6 +87,12 @@ t.test(test_summer$total_attendances,
        conf.level = 0.95)
 ```
 
+
+
+
+
+
+
 ```{r}
 waiting_times %>% 
   select(month, hbt, number_of_attendances_all) %>%
