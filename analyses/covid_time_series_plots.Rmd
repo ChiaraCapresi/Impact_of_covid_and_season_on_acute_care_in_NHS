@@ -228,10 +228,34 @@ ha_demo %>%
   summarise(mean_admissions = mean(number_admissions)) %>% 
   ggplot() +
   aes(x = month_ending_date, y = mean_admissions, group = age_group, colour = age_group) +
-  geom_line() +
-  labs(x = "\nYear",
-       y = "average monthly hospital admissions\n")
+  geom_line() 
 ```
+
+This plot shows the variation of the `mean` of the number of hospital admissions in Scotland depending on the age groups that where available in the original dataset.
+Using the `mean` here is useful for having a clearer idea of the trend that hospital admissions follow over time, depending on age.
+
+Our goal here is to have a look of the mean number of admissions per age and find out which could be the best way to group ages together with the aim of reducing the number of groups.
+
+The first thing we notice is that the 'Under 5' category seems to have a quite curious trend which seems to be quite different from the others with frequent ups and downs and a general increasing trend until at least the end of 2022. For this reason we think that it is worth to keep this age group separated from the others. The other groups, a part from '5-14' and '85 and over', seems to have a more similar trend. So, since we want to consider the following facts:
+
+- we aim to group ages in the less number of group possible for achieving the better overview of the mean of admissions depending on age,
+
+- since we noticed that people aged more than 5, a part from two sporadic exceptions (5 - 14 and 85 and over), seems to have the same trend, we could think of grouping them together into a single group. However, we actually think that this would be a too much restrictive decision.
+
+All these things considered, we decide to split the age data into the following three groups: `Under 5`, `5 - 64` and `65 and over`.
+
+
+```{r}
+ha_demo %>% 
+  filter(hb %in% c("S92000003"), age != "All ages") %>%
+  group_by(age, month_ending_date) %>% 
+  summarise(mean_admissions = mean(number_admissions)) %>% 
+  ggplot() +
+  aes(x = month_ending_date, y = mean_admissions, group = age, colour = age) +
+  geom_line()
+```
+
+
 
 
 ```{r}
@@ -243,6 +267,10 @@ ha_demo %>%
   aes(x = month_ending_date, y = mean_admissions, group = age, colour = age) +
   geom_line()
 ```
+
+This plot, for example, shows the trend of the `mean` of hospital admissions for the "Airshire and Arran" health board of Scotland. As we can see here, for example, while the trend of 'over 5' is almost similar to the general trend of Scotland that we saw in the previous plot, the trend of the `mean` of hospital admissions for people aged 'under 5' seems to have a quite significantly different trend, since it present a huge increase during Autumn 2022.
+
+
 
 
 
@@ -438,4 +466,3 @@ Starting point: one of Naomi's notebooks from Tuesday AM
 # A&E wait times
 
 Starting point: one of Chiara/Thijmen's notebooks from Monday
-
